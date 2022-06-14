@@ -1,0 +1,3 @@
+﻿@using DevExp
+@using DevExp.Models
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers

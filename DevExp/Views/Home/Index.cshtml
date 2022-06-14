@@ -1,0 +1,56 @@
+﻿@using DevExtreme.AspNet.Mvc.Builders;
+@model DevExp.Models.Model
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="dx-fieldset">
+    <div class="dx-fieldset-header">Simple lookup</div>
+    <div class="dx-field">
+        @(Html.DevExtreme().Lookup()
+            .DataSource(Model.Years)
+            .DropDownOptions(p => p.ShowTitle(false))
+            .Placeholder(Model.Years.First())
+            .OnValueChanged("lookup_valueChanged")
+        )
+    </div>
+</div>
+@(Html.DevExtreme().Form<DevExp.Models.Model>()
+     .ID("form")
+    .ColCount(2)
+    .Items(items => {
+        items.AddTabbed().Tabs(tabs=>tabs.Add().Badge("Sales").ColCount(9).Items(
+            ıtems=>{
+                foreach (var i in Model.Sales)
+                {
+                    string ürünfiyat=i.Product.ProductName+"-"+i.Product.UnitPrice;
+                    double total=Convert.ToDouble(i.BuyedUnitAmount)+Convert.ToDouble(i.Product.UnitPrice);
+                    string a=i.TransictionDate.Date.ToString();
+                    ıtems.AddSimpleFor(item=>ürünfiyat).ColSpan(3);
+                    ıtems.AddSimpleFor(item=>total).ColSpan(3);
+                    ıtems.AddSimpleFor(item=>a).ColSpan(3);
+                }
+            }
+        ));
+    })
+)
+
+<script type="text/javascript">
+        function lookup_valueChanged(e) {
+
+    }
+
+</script>
+
+<style>
+    .dx-theme-generic .dx-fieldset,
+    .dx-theme-material .dx-fieldset {
+     width: 40%;
+     float: left;
+    }   
+​
+    .dx-field > .dx-lookup {
+     flex: 1;
+    }
+​
+</style>
